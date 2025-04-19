@@ -4,9 +4,10 @@ import logo from "../assets/logo.png";
 import edit from "../assets/edit.png";
 import sampledata from "./sampleData.json";
 import boy from "../assets/boy.png";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import thumbsup from "../assets/thumbsup.png";
 import thumbsdown from "../assets/thumbsdown.png";
+import { Link } from "react-router-dom";
 
 const Feedback = ({ isClose }) => {
   const handleSubmit = (e) => {
@@ -20,7 +21,7 @@ const Feedback = ({ isClose }) => {
         style={{
           display: "grid",
           position: "absolute",
-          inset:"0",
+          inset: "0",
           placeItems: "center",
           backgroundColor: "rgba(0, 0, 0, 0.6)",
         }}
@@ -53,7 +54,7 @@ const ChatBot = () => {
   const [chatHistory, setChatHistory] = useState([]);
 
   const unmatchedCount = useRef(0); // track how many unknow questions
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   //   const currentTime = new Date().toLocaleTimeString();
 
@@ -105,20 +106,22 @@ const ChatBot = () => {
       <div className={styles.leftSide}>
         <div className={styles.actioButton}>
           <img src={logo} alt="logo" className={styles.minilogo} />
-          <p className={styles.newchat}>New Chat</p>
+          <Link to="/" className={styles.newchat}>
+            New Chat
+          </Link>
           <img src={edit} alt="edit" height={30} />
         </div>
-        <button className={styles.past} onClick={() => navigate("/history")}>
+        <Link to="/history" className={styles.past}>
           Past Conversations
-        </button>
+        </Link>
       </div>
 
       {/* right side */}
       <div className={styles.rightSide}>
         {/* header */}
-        <div className={styles.header}>
+        <header className={styles.header}>
           <h2>Bot AI</h2>
-        </div>
+        </header>
 
         {/* body */}
         <section className={styles.chatbody}>
@@ -233,7 +236,7 @@ const ChatBot = () => {
               <input
                 type="text"
                 className={styles.feedback}
-                placeholder="Type your question..."
+                placeholder="Message Bot AI..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
               />
