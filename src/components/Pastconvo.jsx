@@ -106,17 +106,18 @@ function PastConvo() {
 
         {/* footer */}
         <div>
-          <footer className={styles.footer}>
-            <form style={{ width: "100%" }}>
-              <span>
-                <input
-                  type="text"
-                  placeholder="Message Bot AI..."
-                  
-                />
-              </span>
-            </form>
-            <div style={{ width: "fit", display: "flex", gap: "10px" }}>
+          <form>
+            <span>
+              <input type="text" placeholder="Message Bot AI..." />
+            </span>
+            <div
+              style={{
+                width: "fit",
+                display: "flex",
+                gap: "10px",
+                marginTop: "10px",
+              }}
+            >
               <button type="submit" className={styles.btn1}>
                 Ask
               </button>
@@ -124,7 +125,7 @@ function PastConvo() {
                 Save
               </button>
             </div>
-          </footer>
+          </form>
         </div>
       </div>
     </div>

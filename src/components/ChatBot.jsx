@@ -100,7 +100,7 @@ const ChatBot = () => {
 
   const handleSave = () => {
     const prev = JSON.parse(localStorage.getItem("chatHistory")) || [];
-    localStorage.setItem("chatHistory", JSON.stringify([...prev, chatHistory]));
+    localStorage.setItem("chatHistory", JSON.stringify([...prev, ...chatHistory]));
     alert("Chat saved!");
   };
 
@@ -237,18 +237,23 @@ const ChatBot = () => {
 
         {/* footer */}
         <div>
-          <footer className={styles.footer}>
-            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-              <span>
-                <input
-                  type="text"
-                  placeholder="Message Bot AI..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                />
-              </span>
-            </form>
-            <div style={{ width: "fit", display: "flex", gap: "10px" }}>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <span>
+              <input
+                type="text"
+                placeholder="Message Bot AI..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+            </span>
+            <div
+              style={{
+                width: "fit",
+                display: "flex",
+                gap: "10px",
+                marginTop: "10px",
+              }}
+            >
               <button type="submit" className={styles.btn1}>
                 Ask
               </button>
@@ -260,7 +265,7 @@ const ChatBot = () => {
                 Save
               </button>
             </div>
-          </footer>
+          </form>
         </div>
       </div>
     </div>
