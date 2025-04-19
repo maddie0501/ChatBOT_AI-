@@ -1,58 +1,257 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styles from "./ChatBot.module.css";
 import logo from "../assets/logo.png";
 import edit from "../assets/edit.png";
 import sampledata from "./sampleData.json";
-import boy from '../assets/boy.png'
+import boy from "../assets/boy.png";
+import { useNavigate } from "react-router-dom";
+import thumbsup from "../assets/thumbsup.png";
+import thumbsdown from "../assets/thumbsdown.png";
 
-const ChatBot = () => {
+const Feedback = ({ isClose }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    isClose();
+  };
+
   return (
-    <div className={styles.section1}>
-      <div className={styles.section2}>
-        <div className={styles.historyside}>
-          <img src={logo} alt="logo" className={styles.minilogo} />
-          <p className={styles.newchat}>New Chat</p>
-          <img src={edit} alt="edit" />
-          <button className={styles.past}>Past Conversations</button>
+    <div style={{ position: "fixed", inset: "0" }}>
+      <div
+        style={{
+          display: "grid",
+          position: "absolute",
+          inset:"0",
+          placeItems: "center",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "16px",
+          }}
+        >
+          <h2>Provide Additional Feedback</h2>
+          <form onSubmit={handleSubmit}>
+            <input type="text" />
+            <div>
+              <button type="submit" onClick={isClose}>
+                Submit Feedback
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-      <h2 className={styles.heading}>Bot AI</h2>
-      <h2 className={styles.heading2}>How Can I Help You Today?</h2>
-      <img src={logo} alt="logo" className={styles.logo} />
+    </div>
+  );
+};
 
-      <section>
-        <div className={styles.grids}>
-          <p>Hi, What is the weather</p>
-          <p>Get immediate AI generated response</p>
+const ChatBot = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  const [input, setInput] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+
+  const unmatchedCount = useRef(0); // track how many unknow questions
+  const navigate = useNavigate();
+
+  //   const currentTime = new Date().toLocaleTimeString();
+
+  const fallbackResponses = [
+    "Hi there. How can I assist you today?",
+    "As an AI Language Model, I don't have the details.",
+    "Sorry, I didn't catch that. Could you please rephrase?",
+  ];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const trimmed = input.trim();
+    if (!trimmed) return;
+
+    const match = sampledata.find(
+      (item) => item.question.toLowerCase() === trimmed.toLowerCase()
+    );
+
+    let response;
+    if (match) {
+      response = match.response;
+      unmatchedCount.current = 0; // Reset counter if matched
+    } else {
+      response =
+        fallbackResponses[unmatchedCount.current % fallbackResponses.length];
+      unmatchedCount.current += 1;
+    }
+
+    const newChat = {
+      question: trimmed,
+      response,
+      time: new Date().toLocaleTimeString(),
+    };
+
+    setChatHistory((prev) => [...prev, newChat]);
+    setInput("");
+  };
+
+  const handleSave = () => {
+    const prev = JSON.parse(localStorage.getItem("chatHistory")) || [];
+    localStorage.setItem("chatHistory", JSON.stringify([...prev, chatHistory]));
+    alert("Chat saved!");
+  };
+
+  return (
+    <div className={styles.wrapper}>
+      {/* left side */}
+      <div className={styles.leftSide}>
+        <div className={styles.actioButton}>
+          <img src={logo} alt="logo" className={styles.minilogo} />
+          <p className={styles.newchat}>New Chat</p>
+          <img src={edit} alt="edit" height={30} />
+        </div>
+        <button className={styles.past} onClick={() => navigate("/history")}>
+          Past Conversations
+        </button>
+      </div>
+
+      {/* right side */}
+      <div className={styles.rightSide}>
+        {/* header */}
+        <div className={styles.header}>
+          <h2>Bot AI</h2>
         </div>
 
-        <div > 
-          {sampledata.map(({ id, question, response }) => (
-              <div key={id} className={styles.chatbubble}>
-              <p>{question}</p>
+        {/* body */}
+        <section className={styles.chatbody}>
+          {chatHistory.length > 0 ? (
+            <>
+              {chatHistory.map(({ question, response, time }, index) => (
+                <div key={index}>
+                  <div className={styles.chat}>
+                    <img
+                      src={boy}
+                      alt="boy"
+                      style={{
+                        borderRadius: "50%",
+                        width: "65px",
+                        height: "69px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: "20px",
+                      }}
+                    >
+                      <strong>You</strong>
+                      <p>{question}</p>
+                      <p>{time}</p>
+                    </div>
+                  </div>
 
-                <img src={boy} alt="boy" />
-                {response}
-                
-              
-                  <button>👍</button>
-                  <button>👎</button>
-                
-              
+                  <div className={styles.airesponse}>
+                    <img
+                      src={logo}
+                      alt="logo"
+                      style={{
+                        borderRadius: "50%",
+                        width: "70px",
+                        height: "69px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: "20px",
+                      }}
+                    >
+                      <strong>Soul AI</strong>
+                      <p>{response}</p>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "10px",
+                          paddingTop: "10px",
+                        }}
+                      >
+                        <p>{time}</p>
+                        <img
+                          src={thumbsup}
+                          alt="thumbsup"
+                          onClick={() => setOpen(true)}
+                        />
+                        <img
+                          src={thumbsdown}
+                          alt="thumbsdown"
+                          onClick={() => setOpen(true)}
+                        />
+                      </div>
+                      {isOpen && <Feedback isClose={() => setOpen(false)} />}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              <div style={{ textAlign: "center" }}>
+                <h2>How Can I Help You Today?</h2>
+                <img src={logo} alt="logo" width={100} />
+
+                <section className={styles.container}>
+                  <div className={styles.boxs}>
+                    <p>Hi, What is the weather</p>
+                    <p>Get immediate AI generated response</p>
+                  </div>
+
+                  <div className={styles.boxs}>
+                    <p>Hi, What is my location</p>
+                    <p>Get immediate AI generated response</p>
+                  </div>
+
+                  <div className={styles.boxs}>
+                    <p>Hi, What is the temperature</p>
+                    <p>Get immediate AI generated response</p>
+                  </div>
+
+                  <div className={styles.boxs}>
+                    <p>Hi, how are you</p>
+                    <p>Get immediate AI generated response</p>
+                  </div>
+                </section>
+              </div>
+            </>
+          )}
+        </section>
+
+        {/* footer */}
+        <div>
+          <footer className={styles.footer}>
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              <input
+                type="text"
+                className={styles.feedback}
+                placeholder="Type your question..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+            </form>
+            <div style={{ width: "fit", display: "flex", gap: "10px" }}>
+              <button type="submit" className={styles.btn1}>
+                Ask
+              </button>
+              <button
+                type="button"
+                className={styles.btn2}
+                onClick={handleSave}
+              >
+                Save
+              </button>
             </div>
-          ))}
+          </footer>
         </div>
-      </section>
-
-      <div className={styles.endpart}>
-        <footer className={styles.footer}>
-          <form>
-            <input type="text" className={styles.feedback} />
-          </form>
-
-          <button className={styles.btn1}>Ask</button>
-          <button className={styles.btn2}>Save</button>
-        </footer>
       </div>
     </div>
   );
