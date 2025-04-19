@@ -44,6 +44,7 @@ function PastConvo() {
                 <div key={index} className={styles.sessionBox}>
                   {session.map((chat, i) => (
                     <div key={i} className={styles.chatItem}>
+                      {/* User message */}
                       <div className={styles.chat}>
                         <img
                           src={boy}
@@ -62,14 +63,17 @@ function PastConvo() {
                           }}
                         >
                           <strong>You</strong>
-                          <p>{chat.question}</p>
+
+                       
+                          <div>{chat.question}</div>
+
                           <p>
                             <em>{chat.time}</em>
                           </p>
                         </div>
                       </div>
 
-                      {/* Bot response */}
+                      
                       <div className={styles.chat}>
                         <img
                           src={logo}
@@ -88,7 +92,7 @@ function PastConvo() {
                           }}
                         >
                           <strong>Soul AI</strong>
-                          <p>{chat.response}</p>
+                          <div>{chat.response}</div>
                           <p>
                             <em>{chat.time}</em>
                           </p>

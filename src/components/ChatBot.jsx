@@ -59,10 +59,11 @@ const ChatBot = () => {
   //   const currentTime = new Date().toLocaleTimeString();
 
   const fallbackResponses = [
+    "Sorry, Did not understand your query!",
     "Hi there. How can I assist you today?",
     "As an AI Language Model, I don't have the details.",
-    "Sorry, I didn't catch that. Could you please rephrase?",
   ];
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,12 +78,17 @@ const ChatBot = () => {
     let response;
     if (match) {
       response = match.response;
-      unmatchedCount.current = 0; // Reset counter if matched
+      unmatchedCount.current = 0;
     } else {
-      response =
-        fallbackResponses[unmatchedCount.current % fallbackResponses.length];
+      if (unmatchedCount.current === 0) {
+        response = "Sorry, Did not understand your query!";
+      } else {
+        response =
+          fallbackResponses[unmatchedCount.current % fallbackResponses.length];
+      }
       unmatchedCount.current += 1;
     }
+    
 
     const newChat = {
       question: trimmed,
@@ -120,7 +126,7 @@ const ChatBot = () => {
       <div className={styles.rightSide}>
         {/* header */}
         <header className={styles.header}>
-          <h2>Bot AI</h2>
+          <h1>Bot AI</h1>
         </header>
 
         {/* body */}
@@ -169,7 +175,7 @@ const ChatBot = () => {
                         padding: "20px",
                       }}
                     >
-                      <strong>Soul AI</strong>
+                      <strong><span>Soul AI</span></strong>
                       <p>{response}</p>
 
                       <div
