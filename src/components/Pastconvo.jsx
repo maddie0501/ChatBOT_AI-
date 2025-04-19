@@ -64,7 +64,6 @@ function PastConvo() {
                         >
                           <strong>You</strong>
 
-                       
                           <div>{chat.question}</div>
 
                           <p>
@@ -73,7 +72,6 @@ function PastConvo() {
                         </div>
                       </div>
 
-                      
                       <div className={styles.chat}>
                         <img
                           src={logo}
@@ -110,11 +108,13 @@ function PastConvo() {
         <div>
           <footer className={styles.footer}>
             <form style={{ width: "100%" }}>
-              <input
-                type="text"
-                className={styles.feedback}
-                placeholder="Message Bot AI..."
-              />
+              <span>
+                <input
+                  type="text"
+                  placeholder="Message Bot AI..."
+                  
+                />
+              </span>
             </form>
             <div style={{ width: "fit", display: "flex", gap: "10px" }}>
               <button type="submit" className={styles.btn1}>

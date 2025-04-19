@@ -63,7 +63,6 @@ const ChatBot = () => {
     "Hi there. How can I assist you today?",
     "As an AI Language Model, I don't have the details.",
   ];
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,7 +87,6 @@ const ChatBot = () => {
       }
       unmatchedCount.current += 1;
     }
-    
 
     const newChat = {
       question: trimmed,
@@ -175,7 +173,9 @@ const ChatBot = () => {
                         padding: "20px",
                       }}
                     >
-                      <strong><span>Soul AI</span></strong>
+                      <strong>
+                        <span>Soul AI</span>
+                      </strong>
                       <p>{response}</p>
 
                       <div
@@ -239,13 +239,14 @@ const ChatBot = () => {
         <div>
           <footer className={styles.footer}>
             <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-              <input
-                type="text"
-                className={styles.feedback}
-                placeholder="Message Bot AI..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-              />
+              <span>
+                <input
+                  type="text"
+                  placeholder="Message Bot AI..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                />
+              </span>
             </form>
             <div style={{ width: "fit", display: "flex", gap: "10px" }}>
               <button type="submit" className={styles.btn1}>
