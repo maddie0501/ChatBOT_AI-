@@ -41,8 +41,8 @@ function PastConvo() {
               <p>No saved conversations found.</p>
             ) : (
               savedChats.map((session, index) => (
-                <div key={index} className={styles.sessionBox}>
-                  {session.map((chat, i) => (
+                <div key={index} >
+                  {savedChats.map((chat, i) => (
                     <div key={i} className={styles.chatItem}>
                       {/* User message */}
                       <div className={styles.chat}>
@@ -106,16 +106,18 @@ function PastConvo() {
 
         {/* footer */}
         <div>
-          <form>
+          <form className={styles.footer}>
             <span>
-              <input type="text" placeholder="Message Bot AI..." />
+              <input
+                type="text"
+                placeholder="Message Bot AI..."
+                style={{ padding: "10px", width: "100%" }}
+              />
             </span>
             <div
               style={{
-                width: "fit",
                 display: "flex",
                 gap: "10px",
-                marginTop: "10px",
               }}
             >
               <button type="submit" className={styles.btn1}>

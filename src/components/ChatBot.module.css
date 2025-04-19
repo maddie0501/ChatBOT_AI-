@@ -60,10 +60,9 @@ linear-gradient(0deg, #D7C7F4, #D7C7F4);
 .footer {
   width: 100%;
   padding: 24px;
- 
   display: flex;
-  justify-content: space-between;
-gap:10px;
+ 
+  gap:10px;
 
 }
 
