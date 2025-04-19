@@ -4,7 +4,6 @@ import logo from "../assets/logo.png";
 import edit from "../assets/edit.png";
 import sampledata from "./sampleData.json";
 import boy from "../assets/boy.png";
-// import { useNavigate } from "react-router-dom";
 import thumbsup from "../assets/thumbsup.png";
 import thumbsdown from "../assets/thumbsdown.png";
 import { Link } from "react-router-dom";

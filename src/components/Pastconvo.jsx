@@ -40,64 +40,59 @@ function PastConvo() {
             {savedChats.length === 0 ? (
               <p>No saved conversations found.</p>
             ) : (
-              savedChats.map((session, index) => (
-                <div key={index} >
-                  {savedChats.map((chat, i) => (
-                    <div key={i} className={styles.chatItem}>
-                      {/* User message */}
-                      <div className={styles.chat}>
-                        <img
-                          src={boy}
-                          alt="User"
-                          style={{
-                            borderRadius: "50%",
-                            width: "65px",
-                            height: "69px",
-                          }}
-                        />
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            padding: "20px",
-                          }}
-                        >
-                          <strong>You</strong>
-
-                          <div>{chat.question}</div>
-
-                          <p>
-                            <em>{chat.time}</em>
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className={styles.chat}>
-                        <img
-                          src={logo}
-                          alt="Soul AI"
-                          style={{
-                            borderRadius: "50%",
-                            width: "70px",
-                            height: "69px",
-                          }}
-                        />
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            padding: "20px",
-                          }}
-                        >
-                          <strong>Soul AI</strong>
-                          <div>{chat.response}</div>
-                          <p>
-                            <em>{chat.time}</em>
-                          </p>
-                        </div>
-                      </div>
+              savedChats.map((chat, index) => (
+                <div key={index} className={styles.chatItem}>
+                  {/* User message */}
+                  <div className={styles.chat}>
+                    <img
+                      src={boy}
+                      alt="User"
+                      style={{
+                        borderRadius: "50%",
+                        width: "65px",
+                        height: "69px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: "20px",
+                      }}
+                    >
+                      <strong>You</strong>
+                      <div>{chat.question}</div>
+                      <p>
+                        <em>{chat.time}</em>
+                      </p>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Bot response */}
+                  <div className={styles.chat}>
+                    <img
+                      src={logo}
+                      alt="Soul AI"
+                      style={{
+                        borderRadius: "50%",
+                        width: "70px",
+                        height: "69px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: "20px",
+                      }}
+                    >
+                      <strong>Soul AI</strong>
+                      <div>{chat.response}</div>
+                      <p>
+                        <em>{chat.time}</em>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               ))
             )}
