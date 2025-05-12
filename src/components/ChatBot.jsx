@@ -22,21 +22,26 @@ const Feedback = ({ isClose }) => {
           position: "absolute",
           inset: "0",
           placeItems: "center",
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(4px)",  
         }}
       >
         <div
           style={{
-            backgroundColor: "white",
+            backgroundColor: " #FAF7FF",
             padding: "16px",
+            boxShadow: "-4px 4px 10px 0px #00000040",
+            borderRadius: "10px",
+            
+
           }}
         >
-          <h2>Provide Additional Feedback</h2>
-          <form onSubmit={handleSubmit}>
-            <input type="text" />
-            <div>
-              <button type="submit" onClick={isClose}>
-                Submit Feedback
+          <h2 style={{padding:"10px"}}>Provide Additional Feedback</h2>
+          <form onSubmit={handleSubmit} >
+            <input type="text" style={{width:"400px",height:"150px", borderRadius:"10px"}}/>
+            <div style={{padding:"10px",display:"flex", justifyContent:"end"}}>
+              <button type="submit" onClick={isClose} style={{backgroundColor: "#D7C7F4", padding:"8px", border:"none",borderRadius:"5px"}}>
+                Submit 
               </button>
             </div>
           </form>
@@ -51,6 +56,11 @@ const ChatBot = () => {
 
   const [input, setInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
 
   const unmatchedCount = useRef(0); // track how many unknow questions
   //   const navigate = useNavigate();
@@ -109,10 +119,13 @@ const ChatBot = () => {
     alert("Chat saved!");
   };
 
+
+
   return (
     <div className={styles.wrapper}>
       {/* left side */}
-      <div className={styles.leftSide}>
+      <div className={`${styles.leftSide} ${isSidebarOpen ? styles.open : ""}`}>
+        <div style={{position:"fixed", inset:"0", zIndex:"-1",display:`${isSidebarOpen ? 'block' : 'none'}`}} onClick={() => setIsSidebarOpen(false)} />
         <div className={styles.actioButton}>
           <img src={logo} alt="logo" className={styles.minilogo} />
           <Link to="/" className={styles.newchat}>
@@ -129,7 +142,16 @@ const ChatBot = () => {
       <div className={styles.rightSide}>
         {/* header */}
         <header className={styles.header}>
-          <h1>Bot AI</h1>
+          <div
+            className={styles.hamburger}
+            onClick={toggleSidebar}
+          >
+            <div className={styles.bar1}></div>
+            <div className={styles.bar2}></div>
+            <div className={styles.bar3}></div>
+          </div>
+
+          <h1 >Bot AI</h1>
         </header>
 
         {/* body */}
@@ -138,7 +160,7 @@ const ChatBot = () => {
             <>
               {chatHistory.map(({ question, response, time }, index) => (
                 <div key={index}>
-                  <div className={styles.chat}>
+                  <div className={styles.chat} >
                     <img
                       src={boy}
                       alt="boy"
